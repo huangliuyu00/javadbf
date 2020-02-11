@@ -166,12 +166,11 @@ public class DBFField {
 	 * @param in DataInputStream
 	 * @param charset charset to use
 	 * @param useFieldFlags If the file can store field flags (setting this to false ignore any data in byes 18-19)
-         * @param supportExtendedCharacterFields True if 2-byte (extended) length character fields should be supported, see adjustLengthForLongCharSupport()
 	 *
 	 * @return Returns the created DBFField object.
 	 * @throws IOException  If any stream reading problems occures.
 	 */
-	protected static DBFField createField(DataInput in, Charset charset, boolean useFieldFlags, boolean supportExtendedCharacterFields) throws IOException {
+	protected static DBFField createField(DataInput in, Charset charset, boolean useFieldFlags) throws IOException {
 
 		DBFField field = new DBFField();
 
@@ -204,9 +203,8 @@ public class DBFField {
 		field.setFieldsFlag = in.readByte(); /* 23 */
 		in.readFully(field.reserv4); /* 24-30 */
 		field.indexFieldFlag = in.readByte(); /* 31 */
-		if (supportExtendedCharacterFields){
-			adjustLengthForLongCharSupport(field);
-		}
+		adjustLengthForLongCharSupport(field);
+		
 		if (!useFieldFlags) {
 			field.reserv2 = 0;
 		}
@@ -214,7 +212,7 @@ public class DBFField {
 		return field;
 	}
 
-	protected static DBFField createFieldDB7(DataInput in, Charset charset, boolean supportExtendedCharacterFields) throws IOException {
+	protected static DBFField createFieldDB7(DataInput in, Charset charset) throws IOException {
 
 		DBFField field = new DBFField();
 
@@ -245,9 +243,8 @@ public class DBFField {
 		field.reserv3 = DBFUtils.readLittleEndianShort(in); /* 38-39 */
 		in.readInt(); // 40-43 nextAuto
 		in.readInt(); // 44-47 reserv
-		if (supportExtendedCharacterFields){
-			adjustLengthForLongCharSupport(field);
-		}
+
+		adjustLengthForLongCharSupport(field);
 		return field;
 	}
 	

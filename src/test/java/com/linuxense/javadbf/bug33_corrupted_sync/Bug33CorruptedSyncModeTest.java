@@ -7,8 +7,6 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFException;
-import com.linuxense.javadbf.DBFWriter;
 import com.linuxense.javadbf.testutils.DbfToTxtTest;
 import com.linuxense.javadbf.testutils.FileUtils;
 

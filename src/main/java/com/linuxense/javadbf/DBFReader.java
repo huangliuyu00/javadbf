@@ -22,26 +22,11 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.linuxense.javadbf;
 
-import java.io.Closeable;
-import java.io.DataInputStream;
-import java.io.EOFException;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * DBFReader class can creates objects to represent DBF data.
@@ -214,28 +199,11 @@ public class DBFReader extends DBFBase implements Closeable {
 	 * @param showDeletedRows can be used to identify records that have been deleted.
 	 */
 	public DBFReader(InputStream in, Charset charset, boolean showDeletedRows) {
-		this(in, charset, showDeletedRows, true);
-	}
-
-	/**
-	 * Initializes a DBFReader object.
-	 *
-	 * When this constructor returns the object will have completed reading the
-	 * header (meta date) and header information can be queried there on. And it
-	 * will be ready to return the first row.
-	 *
-	 * @param in the InputStream where the data is read from.
-	 * @param charset charset used to decode field names and field contents. If null, then is autedetected from dbf file
-	 * @param showDeletedRows can be used to identify records that have been deleted.
-         * @param supportExtendedCharacterFields Defines whether 2-byte (extended) length character fields should be supported (see DBFField.adjustLengthForLongCharSupport(), default: true).
-	 */
-	public DBFReader(InputStream in, Charset charset, boolean showDeletedRows, boolean supportExtendedCharacterFields) {
 		try {
 			this.showDeletedRows = showDeletedRows;
 			this.inputStream = in;
 			this.dataInputStream = new DataInputStream(this.inputStream);
 			this.header = new DBFHeader();
-			this.header.setSupportExtendedCharacterFields(supportExtendedCharacterFields);
 			this.header.read(this.dataInputStream, charset, showDeletedRows);
 			setCharset(this.header.getUsedCharset());
 			/* it might be required to leap to the start of records at times */
@@ -314,7 +282,7 @@ public class DBFReader extends DBFBase implements Closeable {
 		if (this.closed) {
 			throw new IllegalArgumentException("this DBFReader is closed");
 		}
-		List<Object> recordObjects = new ArrayList<>(this.getFieldCount());
+		List<Object> recordObjects = new ArrayList<Object>(this.getFieldCount());
 		try {
 			boolean isDeleted = false;
 
@@ -444,9 +412,9 @@ public class DBFReader extends DBFBase implements Closeable {
 			}
 
 			try {
-				GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(new String(t_byte_year, StandardCharsets.US_ASCII)),
-						Integer.parseInt(new String(t_byte_month, StandardCharsets.US_ASCII)) - 1,
-						Integer.parseInt(new String(t_byte_day, StandardCharsets.US_ASCII)));
+				GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(new String(t_byte_year, Charset.forName("US-ASCII"))),
+						Integer.parseInt(new String(t_byte_month, Charset.forName("US-ASCII"))) - 1,
+						Integer.parseInt(new String(t_byte_day, Charset.forName("US-ASCII"))));
 				return calendar.getTime();
 			} catch (NumberFormatException e) {
 				// this field may be empty or may have improper value set
@@ -507,7 +475,18 @@ public class DBFReader extends DBFBase implements Closeable {
 			if (readed != field.getLength()){
 				throw new EOFException("Unexpected end of file");
 			}
-			return BitSet.valueOf(data1);
+			//	return BitSet.valueOf(data1);
+
+
+			BitSet bitSet = new BitSet(data1.length * 8);
+			int index = 0;
+			for (int i = 0; i < data1.length; i++) {
+				for (int j = 7; j >= 0; j--) {
+					bitSet.set(index++, (data1[i] & (1 << j)) >> j == 1 ? true: false);
+				}
+			}
+
+			return bitSet;
 		default:
 			skip(field.getLength());
 			return null;
@@ -555,14 +534,7 @@ public class DBFReader extends DBFBase implements Closeable {
 	 * @throws IOException if some IO error happens
 	 */
 	public void skipRecords(int recordsToSkip) throws IOException {
-		if (showDeletedRows) {
-			skip(recordsToSkip * this.header.recordLength);
-		}
-		else {
-			for (int i = 0; i < recordsToSkip; i++) {
-				nextRecord();
-			}
-		}
+		skip(recordsToSkip * this.header.recordLength);
 	}
 
 	protected DBFHeader getHeader() {

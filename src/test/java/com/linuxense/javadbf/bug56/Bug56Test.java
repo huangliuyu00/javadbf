@@ -8,11 +8,6 @@ import java.nio.charset.Charset;
 
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFField;
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFRow;
-import com.linuxense.javadbf.DBFUtils;
-
 public class Bug56Test {
 
 	public Bug56Test() {

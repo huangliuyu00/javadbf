@@ -20,17 +20,9 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 package com.linuxense.javadbf;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 
 /**
  * Class for read memo files (DBT and FPT)
@@ -56,7 +48,23 @@ public class DBFMemoFile implements Closeable {
 				this.file = new RandomAccessFile(memoFile, "r");
 			}
 			else {
-				this.baisMemory = new ByteArrayInputStream(Files.readAllBytes(memoFile.toPath()));
+			//	this.baisMemory = new ByteArrayInputStream(Files.readAllBytes(memoFile.toPath()));
+
+				//获取输入流
+				FileInputStream fis = new FileInputStream(memoFile);
+				//新的 byte 数组输出流，缓冲区容量1024byte
+				ByteArrayOutputStream bos = new ByteArrayOutputStream(1024);
+				//缓存
+				byte[] b = new byte[1024];
+				int n;
+				while ((n = fis.read(b)) != -1) {
+					bos.write(b, 0, n);
+				}
+				fis.close();
+				//改变为byte[]
+				byte[] data = bos.toByteArray();
+				this.baisMemory = new ByteArrayInputStream(data);
+
 				this.fileInMemory = new DataInputStream(this.baisMemory);
 			}
 		}

@@ -8,10 +8,6 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFRow;
-import com.linuxense.javadbf.DBFUtils;
-
 public class Bug64ExcelDBFTest {
 	
 	public Bug64ExcelDBFTest() {

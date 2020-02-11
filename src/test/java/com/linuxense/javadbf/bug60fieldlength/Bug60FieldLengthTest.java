@@ -7,9 +7,6 @@ import java.io.FileNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFRow;
-import com.linuxense.javadbf.DBFUtils;
 import com.linuxense.javadbf.testutils.DbfToTxtTest;
 
 

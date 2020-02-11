@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
-import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
@@ -70,7 +69,7 @@ public final class DBFUtils {
 			t_float = DBFUtils.removeSpaces(t_float);
 			t_float = DBFUtils.removeNullBytes(t_float);
 			if (t_float.length > 0 && DBFUtils.isPureAscii(t_float) && !DBFUtils.contains(t_float, (byte) '?') && !DBFUtils.contains(t_float, (byte) '*')) {
-				String aux = new String(t_float, StandardCharsets.US_ASCII).replace(',', '.');
+				String aux = new String(t_float, Charset.forName("US-ASCII")).replace(',', '.');
 				if (".".equals(aux)) {
 					return BigDecimal.ZERO;
 				}
@@ -346,7 +345,7 @@ public final class DBFUtils {
 	}
 
 	/**
-	 * Closes silently a #{@link java.io.Closeable}.
+	 * Closes silently a #{@link Closeable}.
 	 * it can be null or throws an exception, will be ignored.
 	 * @param closeable The item to close
 	 */

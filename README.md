@@ -3,6 +3,11 @@ JavaDBF is a Java library for reading and writing XBase files.
 There are plenty of legacy applications around with .dbf as their primary storage format.
 JavaDBF was initially written for data transfer with such applications.
 
+
+# 说明
+基于 https://github.com/albfernandez/javadbf 作修改，使用其在JDK 1.6下的环境，能正常使用。
+
+
 # License
 
 JavaDBF is LGPL
@@ -43,17 +48,6 @@ old code. But there are some small changes that may break your code:
 
 Obtain the latest version of JavaDBF from release page at github.
 Download the jar file and put it in your $CLASSPATH variable. You are ready to go. 
-
-## Getting with Maven
-If you are using Maven, you can add JavaDBF to your project using this dependency in your pom.xml
-
-```
-	<dependency>
-		<groupId>com.github.albfernandez</groupId>
-		<artifactId>javadbf</artifactId>
-		<version>1.11.0</version>
-	</dependency>
-```
 
 
 # Overview of the Library

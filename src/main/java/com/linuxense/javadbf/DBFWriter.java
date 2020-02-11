@@ -22,20 +22,9 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 package com.linuxense.javadbf;
 
 
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /*
  DBFWriter
@@ -52,10 +41,10 @@ import java.util.List;
  * add records using the addRecord() method and then<br>
  * call write() method.
  */
-public class DBFWriter extends DBFBase implements java.io.Closeable {
+public class DBFWriter extends DBFBase implements Closeable {
 
 	private DBFHeader header;
-	private List<Object[]> v_records = new ArrayList<>();
+	private List<Object[]> v_records = new ArrayList<Object[]>();
 	private int recordCount = 0;
 	//Open and append records to an existing DBF
 	private RandomAccessFile raf = null;
@@ -147,8 +136,8 @@ public class DBFWriter extends DBFBase implements java.io.Closeable {
 					this.header.setUsedCharset(charset);
 				}
 				else {
-					setCharset(StandardCharsets.ISO_8859_1);
-					this.header.setUsedCharset(StandardCharsets.ISO_8859_1);
+					setCharset(Charset.forName("ISO-8859-1"));
+					this.header.setUsedCharset(Charset.forName("ISO-8859-1"));
 				}
 				return;
 			}
@@ -384,13 +373,13 @@ public class DBFWriter extends DBFBase implements java.io.Closeable {
 				if (objectArray[j] != null) {
 					GregorianCalendar calendar = new GregorianCalendar();
 					calendar.setTime((Date) objectArray[j]);
-					dataOutput.write(String.valueOf(calendar.get(Calendar.YEAR)).getBytes(StandardCharsets.US_ASCII));
+					dataOutput.write(String.valueOf(calendar.get(Calendar.YEAR)).getBytes(Charset.forName("US-ASCII")));
 					dataOutput.write(DBFUtils.textPadding(String.valueOf(calendar.get(Calendar.MONTH) + 1),
-							StandardCharsets.US_ASCII, 2, DBFAlignment.RIGHT, (byte) '0'));
+							Charset.forName("US-ASCII"), 2, DBFAlignment.RIGHT, (byte) '0'));
 					dataOutput.write(DBFUtils.textPadding(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)),
-							StandardCharsets.US_ASCII, 2, DBFAlignment.RIGHT, (byte) '0'));
+							Charset.forName("US-ASCII"), 2, DBFAlignment.RIGHT, (byte) '0'));
 				} else {
-					dataOutput.write("        ".getBytes(StandardCharsets.US_ASCII));
+					dataOutput.write("        ".getBytes(Charset.forName("US-ASCII")));
 				}
 
 				break;

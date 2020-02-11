@@ -27,7 +27,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,8 +64,7 @@ public class DBFHeader {
 	private Charset detectedCharset;
 	private Charset usedCharset;
 
-        /** Flag indicating if 2-byte (extended) length character fields should be supported (see DBFField.adjustLengthForLongCharSupport(), default: true). */
-        private boolean supportExtendedCharacterFields = true;
+
 
 	private static final int DBASE_LEVEL_7 = 4;
 
@@ -111,33 +109,33 @@ public class DBFHeader {
 			dataInput.readInt();
 		}
 
-		List<DBFField> v_fields = new ArrayList<>();
+		List<DBFField> v_fields = new ArrayList<DBFField>();
 
 		this.usedCharset = this.detectedCharset;
 		if (charset != null) {
 			this.usedCharset = charset;
 		}
 		if (this.usedCharset == null) {
-			this.usedCharset = StandardCharsets.ISO_8859_1;
+			this.usedCharset = Charset.forName("ISO-8859-1");
 		}
 
 		DBFField field = null;
 		if (isDB7()) {
 			/* 48 each */
-			while ((field = DBFField.createFieldDB7(dataInput,this.usedCharset, supportExtendedCharacterFields))!= null) {
+			while ((field = DBFField.createFieldDB7(dataInput,this.usedCharset))!= null) {
 				v_fields.add(field);
 			}
 		}
 		else {
 			/* 32 each */
 			boolean useFieldFlags = supportsFieldFlags();
-			while ((field = DBFField.createField(dataInput,this.usedCharset, useFieldFlags, supportExtendedCharacterFields))!= null) {				
+			while ((field = DBFField.createField(dataInput,this.usedCharset, useFieldFlags))!= null) {				
 				v_fields.add(field);
 			}
 
 		}
 		this.fieldArray = v_fields.toArray(new DBFField[v_fields.size()]);
-		List<DBFField> userFields = new ArrayList<>();
+		List<DBFField> userFields = new ArrayList<DBFField>();
 		if (showDeletedRows) {
 			DBFField deletedField = new DBFField("deleted", DBFDataType.LOGICAL);
 			userFields.add(deletedField);
@@ -307,12 +305,4 @@ public class DBFHeader {
 		this.usedCharset = charset;
 	}
 
-	/**
-	 * Sets whether 2-byte (extended) length character fields should be supported (see DBFField.adjustLengthForLongCharSupport(), default: true).
-	 * 
-	 * @param supportExtendedCharacterFields True to support extended fields
-	 */
-	public void setSupportExtendedCharacterFields(boolean supportExtendedCharacterFields) {
-		this.supportExtendedCharacterFields = supportExtendedCharacterFields;
-	}
 }

@@ -8,12 +8,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFDataType;
-import com.linuxense.javadbf.DBFField;
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFRow;
-import com.linuxense.javadbf.DBFWriter;
-
 public class LimitOf255FieldsPerRecord {
 
 	private static int NUMBER_OF_COLUMNS_TO_CREATE = 315;

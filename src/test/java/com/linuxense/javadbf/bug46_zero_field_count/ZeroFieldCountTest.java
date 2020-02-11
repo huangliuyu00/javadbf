@@ -8,9 +8,6 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFUtils;
-
 public class ZeroFieldCountTest {
 
 	public ZeroFieldCountTest() {

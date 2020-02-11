@@ -24,10 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.linuxense.javadbf.DBFField;
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFUtils;
-
 public final class DbfToTxtTest {
 
 	private DbfToTxtTest() {

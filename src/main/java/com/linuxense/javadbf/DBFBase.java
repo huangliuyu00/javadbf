@@ -22,7 +22,6 @@ package com.linuxense.javadbf;
 
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Base class for DBFReader and DBFWriter. Support for choosing implemented
@@ -31,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 public abstract class DBFBase {
 
 	protected static final int END_OF_DATA = 0x1A;
-	protected static final Charset DEFAULT_CHARSET= StandardCharsets.ISO_8859_1;
+	protected static final Charset DEFAULT_CHARSET= Charset.forName("UTF-8");
 	private Charset charset = DEFAULT_CHARSET;
 
 	protected DBFBase() {
@@ -55,10 +54,11 @@ public abstract class DBFBase {
 	 * of the class java.nio.charset.Charset
 	 * 
 	 * @param charset charset to use
-	 * @deprecated set the charset in DBFWriter or DBFReader constructors
+	 *
 	 */
 	// TODO set this metdhod protected in 2.0
-	@Deprecated
+//	@Deprecated
+//  @deprecated set the charset in DBFWriter or DBFReader constructors
 	public void setCharset(Charset charset) {
 		this.charset = charset;
 	}
@@ -67,9 +67,10 @@ public abstract class DBFBase {
 	 * Gets the charset used to read and write files.
 	 *
 	 * @return name of the charset
-	 * @deprecated replaced by {@link DBFBase#getCharset()}
+	 *
 	 */
-	@Deprecated
+//	@Deprecated
+// @deprecated replaced by {@link DBFBase#getCharset()}
 	public String getCharactersetName() {
 		return this.charset.displayName();
 	}
@@ -83,9 +84,9 @@ public abstract class DBFBase {
 	 * of the class java.nio.charset.Charset
 	 *
 	 * @param characterSetName name of the charset
-	 * @deprecated replaced by {@link DBFBase#setCharset(Charset)}
 	 */
-	@Deprecated
+//	@Deprecated
+//  @deprecated replaced by {@link DBFBase#setCharset(Charset)}
 	public void setCharactersetName(String characterSetName) {
 		this.charset = Charset.forName(characterSetName);
 	}

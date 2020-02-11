@@ -6,11 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFDataType;
-import com.linuxense.javadbf.DBFField;
-import com.linuxense.javadbf.DBFUtils;
-import com.linuxense.javadbf.DBFWriter;
-
 public class Bug50ExampleListToDBF {
 	
 	public Bug50ExampleListToDBF () {

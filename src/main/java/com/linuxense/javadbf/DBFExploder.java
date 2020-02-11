@@ -454,11 +454,11 @@ public class DBFExploder {
     }
 
     public static DBFStorage createOutputStreamStorage(OutputStream out) {
-        return new DBFExploder.OutputStreamStorage(out);
+        return new OutputStreamStorage(out);
     }
 
     public static DBFStorage createInMemoryStorage(byte[] buffer) {
-        return new DBFExploder.InMemoryStorage(buffer);
+        return new InMemoryStorage(buffer);
     }
 
 }

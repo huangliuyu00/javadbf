@@ -6,11 +6,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.linuxense.javadbf.DBFFieldNotFoundException;
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFRow;
-import com.linuxense.javadbf.DBFUtils;
-
 /**
  * Test class for issue 45
  * https://github.com/albfernandez/javadbf/issues/45

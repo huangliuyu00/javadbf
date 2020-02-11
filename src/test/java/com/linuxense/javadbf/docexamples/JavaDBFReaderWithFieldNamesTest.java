@@ -3,12 +3,6 @@ package com.linuxense.javadbf.docexamples;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import com.linuxense.javadbf.DBFException;
-import com.linuxense.javadbf.DBFField;
-import com.linuxense.javadbf.DBFReader;
-import com.linuxense.javadbf.DBFRow;
-import com.linuxense.javadbf.DBFUtils;
-
 public class JavaDBFReaderWithFieldNamesTest {
 
 
