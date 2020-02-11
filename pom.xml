@@ -3,8 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.albfernandez</groupId>
     <artifactId>javadbf</artifactId>
-    <version>1.12.0-SNAPSHOT</version>
-    <url>https://github.com/albfernandez/javadbf</url>
+    <version>1.10-LIUYU</version>
     <packaging>jar</packaging>
     <name>javadbf</name>
     <description>JavaDBF is a Java library for reading and writing XBase files.</description>
