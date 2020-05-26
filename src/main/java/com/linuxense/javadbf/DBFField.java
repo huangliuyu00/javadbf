@@ -175,7 +175,10 @@ public class DBFField {
 		DBFField field = new DBFField();
 
 		byte t_byte = in.readByte(); /* 0 */
-		if (t_byte == (byte) 0x0d) {
+
+		// 原 0x0d 13 \n换行符
+		// 添加 0x20 32 空格 (发现有dbf文件是以空格作为换行)
+		if (t_byte == (byte) 0x0d  || t_byte == (byte)0x20 ) {
 			return null;
 		}
 		byte[] fieldName = new byte[11];
@@ -217,7 +220,10 @@ public class DBFField {
 		DBFField field = new DBFField();
 
 		byte t_byte = in.readByte(); /* 0 */
-		if (t_byte == (byte) 0x0d) {
+
+		// 原 0x0d 13 \n换行符
+		// 添加 0x20 32 空格 (发现有dbf文件是以空格作为换行)
+		if (t_byte == (byte) 0x0d  || t_byte == (byte)0x20 ) {
 			return null;
 		}
 		byte[] fieldName = new byte[32];
